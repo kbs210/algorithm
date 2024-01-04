@@ -19,18 +19,24 @@ public class Problem_01010 {
             int N = b;
             int M = c;
 
+            // 중복순열 공식 이용
+            // nCr = n!/(r!*(n-r)!) = n*(n-1)* ... *(n-r+1)/n!
+
+            // n*(n-1)* ... *(n-r+1)
             BigInteger numerator = new BigInteger("1");
             for(int x=0; x<b; x++) {
                 numerator = numerator.multiply(BigInteger.valueOf(M));
                 M--;
             }
 
+            // n!
             BigInteger denominator = new BigInteger("1");
             for(int x=0; x<b; x++) {
                 denominator = denominator.multiply(BigInteger.valueOf(N));
                 N--;
             }
 
+            // n*(n-1)* ... *(n-r+1)/n!
             list[i] = numerator.divide(denominator);
         }
 
