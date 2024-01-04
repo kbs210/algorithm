@@ -19,7 +19,7 @@ public class Problem_01010 {
             int N = b;
             int M = c;
 
-            // 중복순열 공식 이용
+            // 조합 공식 이용
             // nCr = n!/(r!*(n-r)!) = n*(n-1)* ... *(n-r+1)/n!
 
             // n*(n-1)* ... *(n-r+1)
