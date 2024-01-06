@@ -1,6 +1,5 @@
+import java.util.Arrays;
 import java.util.Scanner;
-
-import javax.swing.text.DefaultEditorKit.DefaultKeyTypedAction;
 
 public class Problem_01005 {
     
@@ -24,12 +23,8 @@ public class Problem_01005 {
         int[] resultArray = new int[T];
 
         for(int i=0; i<T; i++){
-            int result = 0;
-            int N = 0;
-            int K = 0;
-
-            N = scanner.nextInt();
-            K = scanner.nextInt();
+            int N = scanner.nextInt();
+            int K = scanner.nextInt();
 
             int[] dArray = new int[N];
             int[][] xyArray = new int[K][2];
@@ -43,34 +38,28 @@ public class Problem_01005 {
                 xyArray[j][1] = scanner.nextInt();
             }
             
-            int W = 0;
-            W = scanner.nextInt();
+            int W = scanner.nextInt();
 
             // 로직 시작
 
-            int[][] nArray = new int[N][N];
-
-            for(int m=0; m<N; m++){
-                for(int n=0; n<N; n++){
-                    nArray[m][n] = 0;
-                }
+            // 기초 건물, Y 없는 건물
+            int[] base = new int[N];
+            for(int a=0; a<K; a++) {
+                base[xyArray[a][1]-1] = 1;
             }
 
-            nArray[0][0] = W;
-
-            
-            
-            for(int m=0; m<N; m++){
-                
+            int baseCnt=0;
+            for (int a=0; a<K; a++) {
+               baseCnt = K - base[a];
             }
 
 
+
+            System.out.println(Arrays.toString(base));
 
 
 
             // 로직 종료
-
-            resultArray[i] = result;
         }
 
         scanner.close();
