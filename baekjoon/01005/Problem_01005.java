@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -48,15 +49,10 @@ public class Problem_01005 {
                 base[xyArray[a][1]-1] = 1;
             }
 
-            int baseCnt=0;
-            for (int a=0; a<K; a++) {
-               baseCnt = K - base[a];
-            }
 
 
 
             System.out.println(Arrays.toString(base));
-
 
 
             // 로직 종료
