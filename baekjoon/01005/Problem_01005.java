@@ -44,15 +44,23 @@ public class Problem_01005 {
             // 로직 시작
 
             // 기초 건물, Y 없는 건물
-            int[] base = new int[N];
+
+            int[] baseArray = new int[N];
             for(int a=0; a<K; a++) {
-                base[xyArray[a][1]-1] = 1;
+                baseArray[xyArray[a][1]-1] = 1;
             }
 
+            ArrayList<Integer> baseList = new ArrayList<>();
+            for(int a=0; a<K; a++) {
+                if(baseArray[a] == 0) {
+                    baseList.add(a+1);
+                }
+            }
+            System.out.println(baseList);
 
 
 
-            System.out.println(Arrays.toString(base));
+
 
 
             // 로직 종료
