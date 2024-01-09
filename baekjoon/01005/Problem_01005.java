@@ -3,7 +3,7 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class Problem_01005 {
-    
+
     public static void main(String[] args){
 
         // ACM Craft
@@ -29,36 +29,41 @@ public class Problem_01005 {
 
             int[] dArray = new int[N];
             int[][] xyArray = new int[K][2];
-            
+
             for(int j=0; j<N; j++){
                 dArray[j] = scanner.nextInt();
             }
-            
+
             for(int j=0; j<K; j++){
                 xyArray[j][0] = scanner.nextInt();
                 xyArray[j][1] = scanner.nextInt();
             }
-            
+
             int W = scanner.nextInt();
 
             // 로직 시작
 
             // 기초 건물, Y 없는 건물
 
-            int[] baseArray = new int[N];
-            for(int a=0; a<K; a++) {
-                baseArray[xyArray[a][1]-1] = 1;
-            }
-
             ArrayList<Integer> baseList = new ArrayList<>();
             for(int a=0; a<K; a++) {
-                if(baseArray[a] == 0) {
-                    baseList.add(a+1);
-                }
+
             }
-            System.out.println(baseList);
 
+            int[] base = new int[N];
+            for(int a=0; a<K; a++) {
+                base[xyArray[a][1]-1] = 1;
+            }
+            for(int a=0; a<N; a++) {
+                if(base[a]==1) {
+                    base[a]=dArray[a];
+                };
+            }
 
+            System.out.println(Arrays.toString(dArray));
+            System.out.println(Arrays.toString(base));
+
+            // 기초 건물
 
 
 
@@ -67,7 +72,7 @@ public class Problem_01005 {
         }
 
         scanner.close();
-        
+
     }
 
 }
