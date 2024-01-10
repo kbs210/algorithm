@@ -47,21 +47,17 @@ public class Problem_01005 {
 
             int[] baseArray = new int[N];
             for(int a=0; a<K; a++) {
-                baseArray[xyArray[a][1]-1] = 1;
+                baseArray[xyArray[a][1]-1] = -1;
             }
+            System.out.println(Arrays.toString(baseArray));
 
-            ArrayList<Integer> baseList = new ArrayList<>();
+            int[] buildTimeArray = new int[N];
             for(int a=0; a<K; a++) {
-                if(baseArray[a] == 0) {
-                    baseList.add(a+1);
+                if(baseArray[a]==-1){
+                    buildTimeArray[a] = dArray[a];
                 }
             }
-            System.out.println(baseList);
-
-
-
-
-
+            System.out.println(Arrays.toString(buildTimeArray));
 
             // 로직 종료
         }
