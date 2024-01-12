@@ -3,7 +3,7 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class Problem_01005 {
-    
+
     public static void main(String[] args){
 
         // ACM Craft
@@ -29,41 +29,81 @@ public class Problem_01005 {
 
             int[] dArray = new int[N];
             int[][] xyArray = new int[K][2];
-            
+
             for(int j=0; j<N; j++){
                 dArray[j] = scanner.nextInt();
             }
-            
+
             for(int j=0; j<K; j++){
                 xyArray[j][0] = scanner.nextInt();
                 xyArray[j][1] = scanner.nextInt();
             }
-            
+
             int W = scanner.nextInt();
 
             // 로직 시작
 
             // 기초 건물, Y 없는 건물
-
-            int[] baseArray = new int[N];
+            int[] base = new int[N];
+            Arrays.fill(base, -1);
             for(int a=0; a<K; a++) {
-                baseArray[xyArray[a][1]-1] = -1;
+                base[xyArray[a][1]-1] = 0;
             }
-            System.out.println(Arrays.toString(baseArray));
 
-            int[] buildTimeArray = new int[N];
-            for(int a=0; a<K; a++) {
-                if(baseArray[a]==-1){
-                    buildTimeArray[a] = dArray[a];
+            int[] buildTime = new int[N];
+            for(int a=0; a<N; a++) {
+                if(base[a]==-1) {
+                    buildTime[a]=dArray[a];
                 }
             }
-            System.out.println(Arrays.toString(buildTimeArray));
+
+            System.out.println(Arrays.toString(dArray));
+            System.out.println(Arrays.toString(base));
+            System.out.println(Arrays.toString(buildTime));
+
+
+            for(int a=0; a<N; a++){
+                if(base[a]==0) {
+                    ArrayList<Integer> list= new ArrayList<>();
+                    boolean flag = false;
+                    for(int b=0; b<K; b++) {
+                        if(xyArray[b][1]==a+1 && base[xyArray[b][0]-1] == -1) {
+                            list.add(xyArray[b][0]);
+                        } else {
+                            flag = true;
+                            break;
+                        }
+                    }
+                    if(flag){
+                        continue;
+                    }
+                    if(!list.isEmpty()){
+                        int size = list.size();
+                        int[] temp = new int[size];
+                        for(int c=0; c<size; c++) {
+                            temp[c] = buildTime[list.get(c)-1];
+                        }
+                        Arrays.sort(temp);
+                        buildTime[a] = temp[size-1];
+                        base[a] = -1;
+                    }
+                }
+            }
+
+            System.out.println(Arrays.toString(dArray));
+            System.out.println(Arrays.toString(base));
+            System.out.println(Arrays.toString(buildTime));
+
+
+
+
+
 
             // 로직 종료
         }
 
         scanner.close();
-        
+
     }
 
 }
