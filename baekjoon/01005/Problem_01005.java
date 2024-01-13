@@ -61,6 +61,10 @@ public class Problem_01005 {
             System.out.println(Arrays.toString(base));
             System.out.println(Arrays.toString(buildTime));
 
+            boolean check = true;
+            while(check) {
+
+            }
 
             for(int a=0; a<N; a++){
                 if(base[a]==0) {
@@ -93,6 +97,8 @@ public class Problem_01005 {
             System.out.println(Arrays.toString(dArray));
             System.out.println(Arrays.toString(base));
             System.out.println(Arrays.toString(buildTime));
+
+
 
 
 
