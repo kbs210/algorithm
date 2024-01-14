@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Problem_01005 {
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
 
         // ACM Craft
 
@@ -23,18 +23,18 @@ public class Problem_01005 {
         int T = scanner.nextInt();
         int[] resultArray = new int[T];
 
-        for(int i=0; i<T; i++){
+        for (int i = 0; i < T; i++) {
             int N = scanner.nextInt();
             int K = scanner.nextInt();
 
             int[] dArray = new int[N];
             int[][] xyArray = new int[K][2];
 
-            for(int j=0; j<N; j++){
+            for (int j = 0; j < N; j++) {
                 dArray[j] = scanner.nextInt();
             }
 
-            for(int j=0; j<K; j++){
+            for (int j = 0; j < K; j++) {
                 xyArray[j][0] = scanner.nextInt();
                 xyArray[j][1] = scanner.nextInt();
             }
@@ -46,14 +46,14 @@ public class Problem_01005 {
             // 기초 건물, Y 없는 건물
             int[] base = new int[N];
             Arrays.fill(base, -1);
-            for(int a=0; a<K; a++) {
-                base[xyArray[a][1]-1] = 0;
+            for (int a = 0; a < K; a++) {
+                base[xyArray[a][1] - 1] = 0;
             }
 
             int[] buildTime = new int[N];
-            for(int a=0; a<N; a++) {
-                if(base[a]==-1) {
-                    buildTime[a]=dArray[a];
+            for (int a = 0; a < N; a++) {
+                if (base[a] == -1) {
+                    buildTime[a] = dArray[a];
                 }
             }
 
@@ -61,48 +61,47 @@ public class Problem_01005 {
             System.out.println(Arrays.toString(base));
             System.out.println(Arrays.toString(buildTime));
 
-            boolean check = true;
-            while(check) {
-
-            }
-
-            for(int a=0; a<N; a++){
-                if(base[a]==0) {
-                    ArrayList<Integer> list= new ArrayList<>();
-                    boolean flag = false;
-                    for(int b=0; b<K; b++) {
-                        if(xyArray[b][1]==a+1 && base[xyArray[b][0]-1] == -1) {
-                            list.add(xyArray[b][0]);
-                        } else {
-                            flag = true;
-                            break;
+            boolean check=false;
+            do {
+                for (int a = 0; a < N; a++) {
+                    if (base[a] == 0) {
+                        ArrayList<Integer> list = new ArrayList<>();
+                        boolean flag = false;
+                        for (int b = 0; b < K; b++) {
+                            if (xyArray[b][1] == a + 1 && base[xyArray[b][0] - 1] == -1) {
+                                list.add(xyArray[b][0]);
+                            } else {
+                                flag = true;
+                                break;
+                            }
                         }
-                    }
-                    if(flag){
-                        continue;
-                    }
-                    if(!list.isEmpty()){
-                        int size = list.size();
-                        int[] temp = new int[size];
-                        for(int c=0; c<size; c++) {
-                            temp[c] = buildTime[list.get(c)-1];
+                        if (flag) {
+                            continue;
                         }
-                        Arrays.sort(temp);
-                        buildTime[a] = temp[size-1];
-                        base[a] = -1;
+                        if (!list.isEmpty()) {
+                            int size = list.size();
+                            int[] temp = new int[size];
+                            for (int c = 0; c < size; c++) {
+                                temp[c] = buildTime[list.get(c) - 1];
+                            }
+                            Arrays.sort(temp);
+                            buildTime[a] = temp[size - 1];
+                            base[a] = -1;
+                        }
                     }
                 }
-            }
 
-            System.out.println(Arrays.toString(dArray));
-            System.out.println(Arrays.toString(base));
-            System.out.println(Arrays.toString(buildTime));
+                System.out.println(Arrays.toString(dArray));
+                System.out.println(Arrays.toString(base));
+                System.out.println(Arrays.toString(buildTime));
 
-
-
-
-
-
+                for (int a = 0; a < N; a++) {
+                    if (base[a] == 0) {
+                        check=true;
+                        break;
+                    }
+                }
+            } while (check);
 
 
             // 로직 종료
