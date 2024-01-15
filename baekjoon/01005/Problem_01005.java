@@ -23,6 +23,7 @@ public class Problem_01005 {
         int T = scanner.nextInt();
         int[] resultArray = new int[T];
 
+        int t=0;
         for (int i = 0; i < T; i++) {
             int N = scanner.nextInt();
             int K = scanner.nextInt();
@@ -89,10 +90,6 @@ public class Problem_01005 {
                     }
                 }
 
-                System.out.println(Arrays.toString(dArray));
-                System.out.println(Arrays.toString(base));
-                System.out.println(Arrays.toString(buildTime));
-
                 for (int a = 0; a < N; a++) {
                     if (base[a] == 0) {
                         check=true;
@@ -101,7 +98,7 @@ public class Problem_01005 {
                 }
             } while (check);
 
-            int t=0;
+
             resultArray[t] = buildTime[W-1];
             t++;
 
