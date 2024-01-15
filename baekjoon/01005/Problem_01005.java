@@ -57,10 +57,6 @@ public class Problem_01005 {
                 }
             }
 
-            System.out.println(Arrays.toString(dArray));
-            System.out.println(Arrays.toString(base));
-            System.out.println(Arrays.toString(buildTime));
-
             boolean check=false;
             do {
                 for (int a = 0; a < N; a++) {
@@ -68,11 +64,13 @@ public class Problem_01005 {
                         ArrayList<Integer> list = new ArrayList<>();
                         boolean flag = false;
                         for (int b = 0; b < K; b++) {
-                            if (xyArray[b][1] == a + 1 && base[xyArray[b][0] - 1] == -1) {
-                                list.add(xyArray[b][0]);
-                            } else {
-                                flag = true;
-                                break;
+                            if (xyArray[b][1] == a + 1) {
+                                if(base[xyArray[b][0] - 1] == -1) {
+                                    list.add(xyArray[b][0]);
+                                } else {
+                                    flag = true;
+                                    break;
+                                }
                             }
                         }
                         if (flag) {
@@ -85,7 +83,7 @@ public class Problem_01005 {
                                 temp[c] = buildTime[list.get(c) - 1];
                             }
                             Arrays.sort(temp);
-                            buildTime[a] = temp[size - 1];
+                            buildTime[a] = temp[size - 1] + dArray[a];
                             base[a] = -1;
                         }
                     }
@@ -103,10 +101,16 @@ public class Problem_01005 {
                 }
             } while (check);
 
+            int t=0;
+            resultArray[t] = buildTime[W-1];
+            t++;
 
             // 로직 종료
         }
 
+        for (int value: resultArray) {
+            System.out.println(value);
+        }
         scanner.close();
 
     }
