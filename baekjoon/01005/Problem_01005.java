@@ -44,6 +44,8 @@ public class Problem_01005 {
 
             // 로직 시작
 
+            // 불필요 건물 제거
+
             // 기초 건물, Y 없는 건물
             int[] base = new int[N];
             Arrays.fill(base, -1);
