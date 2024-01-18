@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.StringTokenizer;
-
+i
 public class Problem_01005 {
 
     public static void main(String[] args) throws IOException {
@@ -58,9 +58,9 @@ public class Problem_01005 {
 
             for(int a=0; a<required.size(); a++){
                 for(int b=0; b<K; b++){
-                    if(xyArray[b][1] == required.indexOf(a)) {
-                        if(!required.contains(required.indexOf(a))){
-                            required.add(required.indexOf(a));
+                    if(xyArray[b][1] == required.get(a)) {
+                        if(!required.contains(xyArray[b][0])){
+                            required.add(xyArray[b][0]);
                         }
                     }
                 }
@@ -73,8 +73,16 @@ public class Problem_01005 {
                 base[xyArray[a][1] - 1] = 0;
             }
 
+            int[] tempbase = new int[N];
+            Arrays.fill(tempbase, -1);
             for(int a=0; a<required.size(); a++){
-                base[(required.indexOf(a)-1)]=-1;
+                tempbase[required.get(a)-1] = 0;
+            }
+
+            for(int a=0; a<N; a++) {
+                if(tempbase[a]==-1){
+                    base[a]=-1;
+                }
             }
 
             int[] buildTime = new int[N];
