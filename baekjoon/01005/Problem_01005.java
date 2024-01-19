@@ -1,9 +1,8 @@
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Scanner;
 import java.util.StringTokenizer;
-i
+
 public class Problem_01005 {
 
     public static void main(String[] args) throws IOException {
@@ -22,40 +21,37 @@ public class Problem_01005 {
         // 1 <= X, Y, W <= N
         // 0 <= Di <= 100000 정수
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         int T = Integer.parseInt(br.readLine());
-        int[] resultArray = new int[T];
 
+        StringTokenizer st;
         for (int i = 0; i < T; i++) {
-            String line1 = br.readLine();
-            StringTokenizer st1 = new StringTokenizer(line1, " ");
+            st = new StringTokenizer(br.readLine());
 
-            int N = Integer.parseInt(st1.nextToken());
-            int K = Integer.parseInt(st1.nextToken());
+            int N = Integer.parseInt(st.nextToken());
+            int K = Integer.parseInt(st.nextToken());
 
             int[] dArray = new int[N];
             int[][] xyArray = new int[K][2];
 
-            String line2 = br.readLine();
-            StringTokenizer st2 = new StringTokenizer(line2, " ");
+            st = new StringTokenizer(br.readLine());
             for (int j = 0; j < N; j++) {
-                dArray[j] = Integer.parseInt(st2.nextToken());
+                dArray[j] = Integer.parseInt(st.nextToken());
             }
 
             for (int j = 0; j < K; j++) {
-                String line3 = br.readLine();
-                StringTokenizer st3 = new StringTokenizer(line3, " ");
-                xyArray[j][0] = Integer.parseInt(st3.nextToken());
-                xyArray[j][1] = Integer.parseInt(st3.nextToken());
+                st = new StringTokenizer(br.readLine());
+                xyArray[j][0] = Integer.parseInt(st.nextToken());
+                xyArray[j][1] = Integer.parseInt(st.nextToken());
             }
 
             int W = Integer.parseInt(br.readLine());
 
             // 로직 시작
 
-            //불필요 건물 확인
+            // 필요 테크트리 건물 ArrayList
             ArrayList<Integer> required = new ArrayList<>();
             required.add(W);
-
             for(int a=0; a<required.size(); a++){
                 for(int b=0; b<K; b++){
                     if(xyArray[b][1] == required.get(a)) {
@@ -133,15 +129,10 @@ public class Problem_01005 {
                 }
             } while (check);
 
-
-            resultArray[i] = buildTime[W - 1];
+            bw.append(Integer.toString(buildTime[W-1])).append("\n");
             // 로직 종료
         }
 
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        for (int a = 0; a < T; a++) {
-            bw.write(resultArray[a] + "\n");
-        }
         bw.flush();
         bw.close();
         br.close();
