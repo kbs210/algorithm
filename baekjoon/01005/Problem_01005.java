@@ -1,6 +1,7 @@
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.StringTokenizer;
 
 public class Problem_01005 {
@@ -32,7 +33,9 @@ public class Problem_01005 {
             int K = Integer.parseInt(st.nextToken());
 
             int[] dArray = new int[N];
-            int[][] xyArray = new int[K][2];
+            ArrayList<Integer> x = new ArrayList<>();
+            ArrayList<Integer> y = new ArrayList<>();
+
 
             st = new StringTokenizer(br.readLine());
             for (int j = 0; j < N; j++) {
@@ -41,8 +44,8 @@ public class Problem_01005 {
 
             for (int j = 0; j < K; j++) {
                 st = new StringTokenizer(br.readLine());
-                xyArray[j][0] = Integer.parseInt(st.nextToken());
-                xyArray[j][1] = Integer.parseInt(st.nextToken());
+                x.add(Integer.parseInt(st.nextToken()));
+                y.add(Integer.parseInt(st.nextToken()));
             }
 
             int W = Integer.parseInt(br.readLine());
@@ -52,11 +55,12 @@ public class Problem_01005 {
             // 필요 테크트리 건물 ArrayList
             ArrayList<Integer> required = new ArrayList<>();
             required.add(W);
+
             for(int a=0; a<required.size(); a++){
                 for(int b=0; b<K; b++){
-                    if(xyArray[b][1] == required.get(a)) {
-                        if(!required.contains(xyArray[b][0])){
-                            required.add(xyArray[b][0]);
+                    if(Objects.equals(y.get(b), required.get(a))) {
+                        if(!required.contains(x.get(b))){
+                            required.add(x.get(b));
                         }
                     }
                 }
@@ -64,6 +68,14 @@ public class Problem_01005 {
 
             // 기초 건물, Y 없는 건물
             int[] base = new int[N];
+            ArrayList<Integer> baseList = new ArrayList<>();
+            for (int a = 0; a < N; a++) {
+                if(!y.contains(a)){
+                    baseList.add(a);
+                }
+            }
+
+
             Arrays.fill(base, -1);
             for (int a = 0; a < K; a++) {
                 base[xyArray[a][1] - 1] = 0;
