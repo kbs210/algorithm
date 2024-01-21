@@ -1,8 +1,5 @@
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Objects;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class Problem_01005 {
 
@@ -32,14 +29,14 @@ public class Problem_01005 {
             int N = Integer.parseInt(st.nextToken());
             int K = Integer.parseInt(st.nextToken());
 
-            int[] dArray = new int[N];
+            ArrayList<Integer> buildTimeList = new ArrayList<>();
             ArrayList<Integer> x = new ArrayList<>();
             ArrayList<Integer> y = new ArrayList<>();
 
 
             st = new StringTokenizer(br.readLine());
             for (int j = 0; j < N; j++) {
-                dArray[j] = Integer.parseInt(st.nextToken());
+                buildTimeList.add(Integer.parseInt(st.nextToken()));
             }
 
             for (int j = 0; j < K; j++) {
@@ -53,21 +50,36 @@ public class Problem_01005 {
             // 로직 시작
 
             // 필요 테크트리 건물 ArrayList
-            ArrayList<Integer> required = new ArrayList<>();
-            required.add(W);
+            ArrayList<Integer> requiredList = new ArrayList<>();
+            requiredList.add(W);
 
-            for(int a=0; a<required.size(); a++){
-                for(int b=0; b<K; b++){
-                    if(Objects.equals(y.get(b), required.get(a))) {
-                        if(!required.contains(x.get(b))){
-                            required.add(x.get(b));
-                        }
+            ArrayList<Integer> xClone = new ArrayList<>();
+            ArrayList<Integer> yClone = new ArrayList<>();
+            for(Integer xt: x){
+                xClone.add((Integer) x.clone());
+            }
+            for(Integer yt: y){
+                yClone.add((Integer) y.clone());
+            }
+
+            for (Integer integer : requiredList) {
+                Iterator<Integer> yIterator = yClone.iterator();
+                Iterator<Integer> xIterator = xClone.iterator();
+                while (yIterator.hasNext()) {
+                    if (Objects.equals(yIterator.next(), integer)) {
+                        yIterator.remove();
+                        requiredList.add(xIterator.next());
+                        xIterator.remove();
+                    } else {
+                        xIterator.next();
                     }
                 }
             }
 
+            // 테크건물 목록 requiredList
+
+
             // 기초 건물, Y 없는 건물
-            int[] base = new int[N];
             ArrayList<Integer> baseList = new ArrayList<>();
             for (int a = 0; a < N; a++) {
                 if(!y.contains(a)){
@@ -75,80 +87,37 @@ public class Problem_01005 {
                 }
             }
 
-
-            Arrays.fill(base, -1);
-            for (int a = 0; a < K; a++) {
-                base[xyArray[a][1] - 1] = 0;
+            for (int a=0; a<N; a++) {
+                if(!baseList.contains(a)){
+                    buildTimeList.set(a,-1);
+                }
             }
 
-            int[] tempbase = new int[N];
-            Arrays.fill(tempbase, -1);
-            for(int a=0; a<required.size(); a++){
-                tempbase[required.get(a)-1] = 0;
+            Iterator<Integer> yIterator = y.iterator();
+            Iterator<Integer> xIterator = x.iterator();
+
+            while (yIterator.hasNext()){
+                if(!requiredList.contains(yIterator.next())){
+                    yIterator.remove();
+                    xIterator.next();
+                    xIterator.remove();
+                } else{
+                    xIterator.next();
+                }
             }
 
             for(int a=0; a<N; a++) {
-                if(tempbase[a]==-1){
-                    base[a]=-1;
-                }
+                if(a)
             }
 
-            int[] buildTime = new int[N];
-            for (int a = 0; a < N; a++) {
-                if (base[a] == -1) {
-                    buildTime[a] = dArray[a];
-                }
-            }
 
-            boolean check;
-            do {
-                check=false;
-                for (int a = 0; a < N; a++) {
-                    if (base[a] == 0) {
-                        ArrayList<Integer> list = new ArrayList<>();
-                        boolean flag = false;
-                        for (int b = 0; b < K; b++) {
-                            if (xyArray[b][1] == a + 1) {
-                                if (base[xyArray[b][0] - 1] == -1) {
-                                    list.add(xyArray[b][0]);
-                                } else {
-                                    flag = true;
-                                    break;
-                                }
-                            }
-                        }
-                        if (flag) {
-                            continue;
-                        }
-                        if (!list.isEmpty()) {
-                            int size = list.size();
-                            int[] temp = new int[size];
-                            for (int c = 0; c < size; c++) {
-                                temp[c] = buildTime[list.get(c) - 1];
-                            }
-                            Arrays.sort(temp);
-                            buildTime[a] = temp[size - 1] + dArray[a];
-                            base[a] = -1;
-                        }
-                    }
-                }
-
-                for (int d = 0; d < N; d++) {
-                    if (base[d] == 0) {
-                        check = true;
-                        break;
-                    }
-                }
-            } while (check);
 
             bw.append(Integer.toString(buildTime[W-1])).append("\n");
             // 로직 종료
         }
-
         bw.flush();
         bw.close();
         br.close();
-
     }
 
 }
