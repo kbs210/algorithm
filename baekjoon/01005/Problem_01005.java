@@ -107,12 +107,12 @@ public class Problem_01005 {
             }
 
             for(int a=0; a<N; a++) {
-                if(a)
+
             }
 
 
 
-            bw.append(Integer.toString(buildTime[W-1])).append("\n");
+//            bw.append(Integer.toString(buildTime[W-1])).append("\n");
             // 로직 종료
         }
         bw.flush();
