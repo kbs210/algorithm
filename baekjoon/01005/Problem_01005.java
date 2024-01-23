@@ -29,16 +29,16 @@ public class Problem_01005 {
             int N = Integer.parseInt(st.nextToken());
             int K = Integer.parseInt(st.nextToken());
 
+            // buildTimeList 건물 건설 시간 리스트
             ArrayList<Integer> buildTimeList = new ArrayList<>();
-            ArrayList<Integer> x = new ArrayList<>();
-            ArrayList<Integer> y = new ArrayList<>();
-
-
             st = new StringTokenizer(br.readLine());
             for (int j = 0; j < N; j++) {
                 buildTimeList.add(Integer.parseInt(st.nextToken()));
             }
 
+            // x, y 전체 규칙 리스트
+            ArrayList<Integer> x = new ArrayList<>();
+            ArrayList<Integer> y = new ArrayList<>();
             for (int j = 0; j < K; j++) {
                 st = new StringTokenizer(br.readLine());
                 x.add(Integer.parseInt(st.nextToken()));
@@ -47,12 +47,7 @@ public class Problem_01005 {
 
             int W = Integer.parseInt(br.readLine());
 
-            // 로직 시작
-
-            // 필요 테크트리 건물 ArrayList
-            ArrayList<Integer> requiredList = new ArrayList<>();
-            requiredList.add(W);
-
+            // requiredList 필요 건물 리스트
             ArrayList<Integer> xClone = new ArrayList<>();
             ArrayList<Integer> yClone = new ArrayList<>();
             for(Integer xt: x){
@@ -62,6 +57,9 @@ public class Problem_01005 {
                 yClone.add((Integer) y.clone());
             }
 
+            // requiredList 필요 테크 건물 리스트
+            ArrayList<Integer> requiredList = new ArrayList<>();
+            requiredList.add(W);
             for (Integer integer : requiredList) {
                 Iterator<Integer> yIterator = yClone.iterator();
                 Iterator<Integer> xIterator = xClone.iterator();
@@ -76,10 +74,7 @@ public class Problem_01005 {
                 }
             }
 
-            // 테크건물 목록 requiredList
-
-
-            // 기초 건물, Y 없는 건물
+            // baseList 기초 건물 리스트
             ArrayList<Integer> baseList = new ArrayList<>();
             for (int a = 0; a < N; a++) {
                 if(!y.contains(a)){
@@ -87,15 +82,9 @@ public class Problem_01005 {
                 }
             }
 
-            for (int a=0; a<N; a++) {
-                if(!baseList.contains(a)){
-                    buildTimeList.set(a,-1);
-                }
-            }
-
+            // x,y 필요 규칙 리스트
             Iterator<Integer> yIterator = y.iterator();
             Iterator<Integer> xIterator = x.iterator();
-
             while (yIterator.hasNext()){
                 if(!requiredList.contains(yIterator.next())){
                     yIterator.remove();
@@ -106,13 +95,18 @@ public class Problem_01005 {
                 }
             }
 
+            int[] actualBuildTime = new int[N];
             for(int a=0; a<N; a++) {
-
+                if(baseList.contains(a+1)){
+                    actualBuildTime[a] = buildTimeList.get(a);
+                }
             }
 
 
 
-//            bw.append(Integer.toString(buildTime[W-1])).append("\n");
+
+
+            bw.append(Integer.toString(actualBuildTime[W-1])).append("\n");
             // 로직 종료
         }
         bw.flush();
