@@ -1,5 +1,7 @@
 import java.io.*;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Problem_01005 {
 
@@ -48,14 +50,8 @@ public class Problem_01005 {
             int W = Integer.parseInt(br.readLine());
 
             // requiredList 필요 건물 리스트
-            ArrayList<Integer> xClone = new ArrayList<>();
-            ArrayList<Integer> yClone = new ArrayList<>();
-            for(Integer xt: x){
-                xClone.add((Integer) x.clone());
-            }
-            for(Integer yt: y){
-                yClone.add((Integer) y.clone());
-            }
+            ArrayList<Integer> xClone = new ArrayList<>(x);
+            ArrayList<Integer> yClone = new ArrayList<>(y);
 
             // requiredList 필요 테크 건물 리스트
             ArrayList<Integer> requiredList = new ArrayList<>();
@@ -77,7 +73,7 @@ public class Problem_01005 {
             // baseList 기초 건물 리스트
             ArrayList<Integer> baseList = new ArrayList<>();
             for (int a = 0; a < N; a++) {
-                if(!y.contains(a)){
+                if (!y.contains(a)) {
                     baseList.add(a);
                 }
             }
@@ -85,28 +81,56 @@ public class Problem_01005 {
             // x,y 필요 규칙 리스트
             Iterator<Integer> yIterator = y.iterator();
             Iterator<Integer> xIterator = x.iterator();
-            while (yIterator.hasNext()){
-                if(!requiredList.contains(yIterator.next())){
+            while (yIterator.hasNext()) {
+                if (!requiredList.contains(yIterator.next())) {
                     yIterator.remove();
                     xIterator.next();
                     xIterator.remove();
-                } else{
+                } else {
                     xIterator.next();
                 }
             }
 
             int[] actualBuildTime = new int[N];
-            for(int a=0; a<N; a++) {
-                if(baseList.contains(a+1)){
+            Arrays.fill(actualBuildTime, -1);
+            for (int a = 0; a < N; a++) {
+                if (baseList.contains(a + 1)) {
                     actualBuildTime[a] = buildTimeList.get(a);
+                }
+                if(!requiredList.contains(a)){
+                    actualBuildTime[a] = -2;
                 }
             }
 
+            boolean outterFlag;
+            do {
+                outterFlag=false;
+                for (int a=0; a<N; a++) {
+                    if(actualBuildTime[a]==-1){
+                        boolean disableToBuild = false;
+                        ArrayList<Integer> temp = new ArrayList<>();
+                        for(int b=0; b<y.size(); b++) {
+                            if(y.get(b)==a){
+                                if(actualBuildTime[x.get(b)-1]!=-1){
+                                    disableToBuild=true;
+                                    continue;
+                                }
+                                temp.add(actualBuildTime[x.get(b)-1]);
+                            }
+                        }
+                        if(disableToBuild) {
+                            outterFlag = true;
+                            continue;
+                        }
+                        actualBuildTime[a] = Collections.max(temp);
+                    }
+                }
+            } while (outterFlag);
 
 
 
 
-            bw.append(Integer.toString(actualBuildTime[W-1])).append("\n");
+            bw.append(Integer.toString(actualBuildTime[W - 1])).append("\n");
             // 로직 종료
         }
         bw.flush();
