@@ -105,16 +105,16 @@ public class Problem_01005 {
                 }
             }
 
-            boolean outterFlag;
+            boolean stillLeft;
             do {
-                outterFlag=false;
+                stillLeft=false;
                 for (int a=0; a<N; a++) {
                     if(actualBuildTime[a]==-1){
                         boolean disableToBuild = false;
                         ArrayList<Integer> temp = new ArrayList<>();
                         for(int b=0; b<y.size(); b++) {
                             if(y.get(b)==(a+1)){
-                                if(actualBuildTime[x.get(b)-1]!=-1){
+                                if(actualBuildTime[x.get(b)-1]==-1){
                                     disableToBuild=true;
                                     continue;
                                 }
@@ -122,13 +122,13 @@ public class Problem_01005 {
                             }
                         }
                         if(disableToBuild) {
-                            outterFlag = true;
+                            stillLeft = true;
                             continue;
                         }
-                        actualBuildTime[a] = Collections.max(temp);
+                        actualBuildTime[a] = Collections.max(temp) + buildTimeList.get(a);
                     }
                 }
-            } while (outterFlag);
+            } while (stillLeft);
 
 
 
