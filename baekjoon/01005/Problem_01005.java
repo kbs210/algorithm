@@ -56,13 +56,16 @@ public class Problem_01005 {
             // requiredList 필요 테크 건물 리스트
             ArrayList<Integer> requiredList = new ArrayList<>();
             requiredList.add(W);
-            for (Integer integer : requiredList) {
+            for (int a=0; a<requiredList.size(); a++) {
                 Iterator<Integer> yIterator = yClone.iterator();
                 Iterator<Integer> xIterator = xClone.iterator();
                 while (yIterator.hasNext()) {
-                    if (Objects.equals(yIterator.next(), integer)) {
+                    if (Objects.equals(yIterator.next(), requiredList.get(a))) {
                         yIterator.remove();
-                        requiredList.add(xIterator.next());
+                        int preBuild = xIterator.next();
+                        if(!requiredList.contains(preBuild)){
+                            requiredList.add(preBuild);
+                        }
                         xIterator.remove();
                     } else {
                         xIterator.next();
@@ -73,8 +76,8 @@ public class Problem_01005 {
             // baseList 기초 건물 리스트
             ArrayList<Integer> baseList = new ArrayList<>();
             for (int a = 0; a < N; a++) {
-                if (!y.contains(a)) {
-                    baseList.add(a);
+                if (!y.contains(a+1)) {
+                    baseList.add(a+1);
                 }
             }
 
@@ -97,7 +100,7 @@ public class Problem_01005 {
                 if (baseList.contains(a + 1)) {
                     actualBuildTime[a] = buildTimeList.get(a);
                 }
-                if(!requiredList.contains(a)){
+                if(!requiredList.contains(a+1)){
                     actualBuildTime[a] = -2;
                 }
             }
@@ -110,7 +113,7 @@ public class Problem_01005 {
                         boolean disableToBuild = false;
                         ArrayList<Integer> temp = new ArrayList<>();
                         for(int b=0; b<y.size(); b++) {
-                            if(y.get(b)==a){
+                            if(y.get(b)==(a+1)){
                                 if(actualBuildTime[x.get(b)-1]!=-1){
                                     disableToBuild=true;
                                     continue;
