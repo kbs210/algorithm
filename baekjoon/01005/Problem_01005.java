@@ -49,6 +49,12 @@ public class Problem_01005 {
 
             int W = Integer.parseInt(br.readLine());
 
+
+            if (!y.contains(W)) {
+                bw.append(Integer.toString(buildTimeList.get(W-1))).append("\n");
+                continue;
+            }
+
             // requiredList 필요 건물 리스트
             ArrayList<Integer> xClone = new ArrayList<>(x);
             ArrayList<Integer> yClone = new ArrayList<>(y);
