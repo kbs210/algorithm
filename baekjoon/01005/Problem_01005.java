@@ -7,6 +7,9 @@ public class Problem_01005 {
 
     public static void main(String[] args) throws IOException {
 
+        // DFS Deep First Search 깊이 우선 탐색
+        // BFS Breath First Search  너비 우선 탐색
+
         // ACM Craft
 
         // T : 테스트 케이스 개수
