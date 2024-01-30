@@ -7,8 +7,8 @@ public class Problem_01005 {
 
     public static void main(String[] args) throws IOException {
 
-        // DFS Deep First Search 깊이 우선 탐색
-        // BFS Breath First Search  너비 우선 탐색
+        // DFS Deep First Search 깊이 우선 탐색 - 시작 노드에서 자식의 노드들을 순서대로 탐색하면서 깊이를 우선으로 탐색하는 알고리즘
+        // BFS Breath First Search  너비 우선 탐색 - 시작 정점을 방문한 후 시작 정점에 인접한 모든 정점들을 우선 방문하는 방법
 
         // ACM Craft
 
