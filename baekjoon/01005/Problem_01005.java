@@ -51,94 +51,126 @@ public class Problem_01005 {
             }
 
             int W = Integer.parseInt(br.readLine());
-
-
-            if (!y.contains(W)) {
-                bw.append(Integer.toString(buildTimeList.get(W-1))).append("\n");
-                continue;
-            }
-
-            // requiredList 필요 건물 리스트
-            ArrayList<Integer> xClone = new ArrayList<>(x);
-            ArrayList<Integer> yClone = new ArrayList<>(y);
-
-            // requiredList 필요 테크 건물 리스트
-            ArrayList<Integer> requiredList = new ArrayList<>();
-            requiredList.add(W);
-            for (int a=0; a<requiredList.size(); a++) {
-                Iterator<Integer> yIterator = yClone.iterator();
-                Iterator<Integer> xIterator = xClone.iterator();
-                while (yIterator.hasNext()) {
-                    if (Objects.equals(yIterator.next(), requiredList.get(a))) {
-                        yIterator.remove();
-                        int preBuild = xIterator.next();
-                        if(!requiredList.contains(preBuild)){
-                            requiredList.add(preBuild);
-                        }
-                        xIterator.remove();
-                    } else {
-                        xIterator.next();
-                    }
-                }
-            }
-
-            // baseList 기초 건물 리스트
-            ArrayList<Integer> baseList = new ArrayList<>();
-            for (int a = 0; a < N; a++) {
-                if (!y.contains(a+1)) {
-                    baseList.add(a+1);
-                }
-            }
-
-            // x,y 필요 규칙 리스트
-            Iterator<Integer> yIterator = y.iterator();
-            Iterator<Integer> xIterator = x.iterator();
-            while (yIterator.hasNext()) {
-                if (!requiredList.contains(yIterator.next())) {
-                    yIterator.remove();
-                    xIterator.next();
-                    xIterator.remove();
-                } else {
-                    xIterator.next();
-                }
-            }
-
+//
+//            if (!y.contains(W)) {
+//                bw.append(Integer.toString(buildTimeList.get(W-1))).append("\n");
+//                continue;
+//            }
+//
+//            // requiredList 필요 건물 리스트
+//            ArrayList<Integer> xClone = new ArrayList<>(x);
+//            ArrayList<Integer> yClone = new ArrayList<>(y);
+//
+//            // requiredList 필요 테크 건물 리스트
+//            ArrayList<Integer> requiredList = new ArrayList<>();
+//            requiredList.add(W);
+//            for (int a=0; a<requiredList.size(); a++) {
+//                Iterator<Integer> yIterator = yClone.iterator();
+//                Iterator<Integer> xIterator = xClone.iterator();
+//                while (yIterator.hasNext()) {
+//                    if (Objects.equals(yIterator.next(), requiredList.get(a))) {
+//                        yIterator.remove();
+//                        int preBuild = xIterator.next();
+//                        if(!requiredList.contains(preBuild)){
+//                            requiredList.add(preBuild);
+//                        }
+//                        xIterator.remove();
+//                    } else {
+//                        xIterator.next();
+//                    }
+//                }
+//            }
+//
+//            // baseList 기초 건물 리스트
+//            ArrayList<Integer> baseList = new ArrayList<>();
+//            for (int a = 0; a < N; a++) {
+//                if (!y.contains(a+1)) {
+//                    baseList.add(a+1);
+//                }
+//            }
+//
+//            // x,y 필요 규칙 리스트
+//            Iterator<Integer> yIterator = y.iterator();
+//            Iterator<Integer> xIterator = x.iterator();
+//            while (yIterator.hasNext()) {
+//                if (!requiredList.contains(yIterator.next())) {
+//                    yIterator.remove();
+//                    xIterator.next();
+//                    xIterator.remove();
+//                } else {
+//                    xIterator.next();
+//                }
+//            }
+//
             int[] actualBuildTime = new int[N];
+//            Arrays.fill(actualBuildTime, -1);
+//            for (int a = 0; a < N; a++) {
+//                if (baseList.contains(a + 1)) {
+//                    actualBuildTime[a] = buildTimeList.get(a);
+//                }
+//                if(!requiredList.contains(a+1)){
+//                    actualBuildTime[a] = -2;
+//                }
+//            }
+
+//            boolean stillLeft;
+//            do {
+//                stillLeft=false;
+//                for (int a=0; a<N; a++) {
+//                    if(actualBuildTime[a]==-1){
+//                        boolean disableToBuild = false;
+//                        ArrayList<Integer> temp = new ArrayList<>();
+//                        for(int b=0; b<y.size(); b++) {
+//                            if(y.get(b)==(a+1)){
+//                                if(actualBuildTime[x.get(b)-1]==-1){
+//                                    disableToBuild=true;
+//                                    continue;
+//                                }
+//                                temp.add(actualBuildTime[x.get(b)-1]);
+//                            }
+//                        }
+//                        if(disableToBuild) {
+//                            stillLeft = true;
+//                            continue;
+//                        }
+//                        actualBuildTime[a] = Collections.max(temp) + buildTimeList.get(a);
+//                    }
+//                }
+//            } while (stillLeft);
+
+
+            int[] inDegree = new int[N]; // 진입 차수
+            List<List<Integer>> graph = new ArrayList<>(); // 그래프
+            for (int k = 0; k < N; k++) {
+                graph.add(new ArrayList<>());
+            }
+// 의존성 그래프와 진입 차수 초기화
+            for (int k = 0; k < y.size(); k++) {
+                graph.get(x.get(k) - 1).add(y.get(k) - 1);
+                inDegree[y.get(k) - 1]++;
+            }
+
+// 위상 정렬을 위한 준비
             Arrays.fill(actualBuildTime, -1);
-            for (int a = 0; a < N; a++) {
-                if (baseList.contains(a + 1)) {
-                    actualBuildTime[a] = buildTimeList.get(a);
-                }
-                if(!requiredList.contains(a+1)){
-                    actualBuildTime[a] = -2;
+            Queue<Integer> queue = new LinkedList<>();
+            for (int k = 0; k < N; k++) {
+                if (inDegree[k] == 0) {
+                    queue.add(k);
+                    actualBuildTime[k] = buildTimeList.get(k); // 진입 차수가 0이면 바로 건설 가능
                 }
             }
 
-            boolean stillLeft;
-            do {
-                stillLeft=false;
-                for (int a=0; a<N; a++) {
-                    if(actualBuildTime[a]==-1){
-                        boolean disableToBuild = false;
-                        ArrayList<Integer> temp = new ArrayList<>();
-                        for(int b=0; b<y.size(); b++) {
-                            if(y.get(b)==(a+1)){
-                                if(actualBuildTime[x.get(b)-1]==-1){
-                                    disableToBuild=true;
-                                    continue;
-                                }
-                                temp.add(actualBuildTime[x.get(b)-1]);
-                            }
-                        }
-                        if(disableToBuild) {
-                            stillLeft = true;
-                            continue;
-                        }
-                        actualBuildTime[a] = Collections.max(temp) + buildTimeList.get(a);
+// 위상 정렬 수행하며 건설 시간 계산
+            while (!queue.isEmpty()) {
+                int current = queue.poll();
+                for (int next: graph.get(current)) {
+                    inDegree[next]--;
+                    if (inDegree[next] == 0) {
+                        queue.add(next);
                     }
+                    actualBuildTime[next] = Math.max(actualBuildTime[next], actualBuildTime[current] + buildTimeList.get(next));
                 }
-            } while (stillLeft);
-
+            }
 
 
 
