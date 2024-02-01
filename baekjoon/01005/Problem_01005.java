@@ -144,13 +144,13 @@ public class Problem_01005 {
             for (int k = 0; k < N; k++) {
                 graph.add(new ArrayList<>());
             }
-// 의존성 그래프와 진입 차수 초기화
+            // 의존성 그래프와 진입 차수 초기화
             for (int k = 0; k < y.size(); k++) {
                 graph.get(x.get(k) - 1).add(y.get(k) - 1);
                 inDegree[y.get(k) - 1]++;
             }
 
-// 위상 정렬을 위한 준비
+            // 위상 정렬을 위한 준비
             Arrays.fill(actualBuildTime, -1);
             Queue<Integer> queue = new LinkedList<>();
             for (int k = 0; k < N; k++) {
@@ -160,7 +160,7 @@ public class Problem_01005 {
                 }
             }
 
-// 위상 정렬 수행하며 건설 시간 계산
+            // 위상 정렬 수행하며 건설 시간 계산
             while (!queue.isEmpty()) {
                 int current = queue.poll();
                 for (int next: graph.get(current)) {
