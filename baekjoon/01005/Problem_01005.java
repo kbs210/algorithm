@@ -54,28 +54,25 @@ public class Problem_01005 {
 
             int[] actualBuildTime = new int[N];
 
-            int[] inDegree = new int[N]; // 진입 차수
-            List<List<Integer>> graph = new ArrayList<>(); // 그래프
+            int[] inDegree = new int[N];
+            List<List<Integer>> graph = new ArrayList<>();
             for (int k = 0; k < N; k++) {
                 graph.add(new ArrayList<>());
             }
-            // 의존성 그래프와 진입 차수 초기화
+            
             for (int k = 0; k < y.size(); k++) {
                 graph.get(x.get(k) - 1).add(y.get(k) - 1);
                 inDegree[y.get(k) - 1]++;
             }
 
-            // 위상 정렬을 위한 준비
-            Arrays.fill(actualBuildTime, -1);
             Queue<Integer> queue = new LinkedList<>();
             for (int k = 0; k < N; k++) {
                 if (inDegree[k] == 0) {
                     queue.add(k);
-                    actualBuildTime[k] = buildTimeList.get(k); // 진입 차수가 0이면 바로 건설 가능
+                    actualBuildTime[k] = buildTimeList.get(k);
                 }
             }
 
-            // 위상 정렬 수행하며 건설 시간 계산
             while (!queue.isEmpty()) {
                 int current = queue.poll();
                 for (int next: graph.get(current)) {
