@@ -27,6 +27,9 @@ public class Problem_01006 {
             for (int j = 0; j < N; j++) {
                 outterPosition.add(Integer.parseInt(st.nextToken()));
             }
+
+            System.out.printf(Arrays.toString(innerPosition.toArray()));
+            System.out.printf(Arrays.toString(innerPosition.toArray()));
         }
 
         br.close();
