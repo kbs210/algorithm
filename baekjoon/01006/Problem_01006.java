@@ -30,6 +30,12 @@ public class Problem_01006 {
 
             System.out.printf(Arrays.toString(innerPosition.toArray()));
             System.out.printf(Arrays.toString(innerPosition.toArray()));
+
+            // 쪼갤 수 있는 경우의 수
+
+            // 경우의 수 중 소대 초과 경우 제거
+
+            // 최소 소대 수
         }
 
         br.close();
