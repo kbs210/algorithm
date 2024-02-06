@@ -32,6 +32,14 @@ public class Problem_01006 {
             System.out.printf(Arrays.toString(innerPosition.toArray()));
 
             // 쪼갤 수 있는 경우의 수
+            /*
+                1. 외각만 2구역
+                2. 내각만 2구역
+                3. 외-내각으로 2구역
+                4. 외각, 외내각으로 2구역
+                5. 내각, 외내각으로 2구역
+                6. 외각, 내각, 외내각 2구역
+             */
 
             // 경우의 수 중 소대 초과 경우 제거
 
